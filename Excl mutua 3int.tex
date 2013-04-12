@@ -86,7 +86,7 @@ contrario pasa la fase de comprobación y cambia su estado a que esta dentro.
 
 \frametitle{Problemas del Algoritmo}
 \begin{enumerate}[$*$]
-\item Se corre el riesgo de producir un interbloqueo si dos procesos tienen un flag true, al querer 
+\item Se corre el riesgo de producir un exclusión mutua si dos procesos tienen que entrar simultáneamente, al querer 
 acceder las dos variables al mismo recurso ninguna puede hacerlo.
 \item A su ves se produce una no progresión, ya que no hay forma de revertir lo ocurrido
 \item Todavía sigue sin resolverse el problema de que si un proceso se interrumpe mientras queda 

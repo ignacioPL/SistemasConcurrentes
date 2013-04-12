@@ -41,11 +41,21 @@
 programación concurrente.
 \item Harris Hyman, estudiante universitario, propuso esta solución en 1966 basándose en el 
 existente algoritmo de Petersen.
-\item Fue publicado en un diario escolar pero luego los publicantes se retractaron debido a que 
-luego descubrieron que el algoritmo era incorrecto.
+\item Fue publicado y aprobado por varios revisores pero luego los publicantes se retractaron debido a que se descubrió que el algoritmo era incorrecto.
 \end{enumerate}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{Descripción} 
+\begin{enumerate}[$*$]
+\item Consiste en turnar la ejecución de dos procesos concurrentes, cuando uno esta trabajando, 
+ciclará 
+hasta que termine y luego pasará al proceso siguiente.
+\item Sin embargo el algoritmo presenta fallas en la resolución de la exclusión mutua.
+\end{enumerate}
+\end{frame}
+
 
 \begin{frame}[fragile]
 
@@ -56,32 +66,19 @@ luego descubrieron que el algoritmo era incorrecto.
 void Protocol(int me, int you)
 {
         do{
-        flag[me] = true;
-        while (turn != me){
-             while(flag[you])
-               /* do nothing */
-             turn = me;
+1        flag[me] = true;
+2        while (turn != me){
+3             while(flag[you])
+4               /* do nothing */
+5             turn = me;
           }
-        CriticalSection(me);
-        flag[me] = false;
-        RemainderSection(me);
+6        CriticalSection(me);
+7        flag[me] = false;
+8        RemainderSection(me);
         }while(true);
 }
 \end{lstlisting}
 \end{frame}
-
-\begin{frame}
-\frametitle{Descripción} 
-\begin{enumerate}[$*$]
-\item Consiste en turnar la ejecución de dos procesos concurrentes, cuando uno esta trabajando, 
-ciclará 
-hasta que termine y luego pasará al proceso siguiente.
-\item Sin embargo el algoritmo presenta fallas en la resolución de la exclusión mutua. A 
-continuación 
-mostraremos un ejemplo en el cual falla.
-\end{enumerate}
-\end{frame}
-
 
 \begin{frame}
 \frametitle{Ejemplo} 
@@ -94,8 +91,8 @@ Supongamos que:
 El proceso P1 ejecuta 1, 2, 3. Como flag[0] es falso, la próxima instrucción que debe ejecutar P1 
 seria 5, pero lo hará próximamente.\par
 P0 ejecuta 1, 2 y 6.\par
-Y por ultimo P0 quiere ejecutar 5 y 6 pero no puede porque P0 está trabajando en el proceso 6, ambos 
-se encuentran en la exclusión mutua.
+Por ultimo P0 quiere ejecutar 5 y 6 pero no puede porque P0 está trabajando en el proceso 6, ambos 
+se encuentran en violación exclusión mutua.
 \end{frame}
 
 \begin{frame}
